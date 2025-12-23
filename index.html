@@ -542,6 +542,109 @@
 
     .ai-feedback-box { background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(148, 163, 184, 0.3); border-radius: 10px; padding: 12px; color: #e2e8f0; font-size: 14px; white-space: pre-wrap; }
 
+    /* Notification Settings */
+    .notification-settings {
+      background: rgba(30, 41, 59, 0.6);
+      border: 1px solid rgba(250, 204, 21, 0.2);
+      border-radius: 12px;
+      padding: 16px;
+      margin-top: 20px;
+    }
+
+    .notification-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+
+    .notification-header h3 {
+      font-size: 16px;
+      color: #facc15;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .notification-toggle {
+      position: relative;
+      width: 50px;
+      height: 26px;
+    }
+
+    .notification-toggle input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .toggle-slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #374151;
+      transition: 0.3s;
+      border-radius: 26px;
+    }
+
+    .toggle-slider:before {
+      position: absolute;
+      content: "";
+      height: 20px;
+      width: 20px;
+      left: 3px;
+      bottom: 3px;
+      background-color: white;
+      transition: 0.3s;
+      border-radius: 50%;
+    }
+
+    .notification-toggle input:checked + .toggle-slider {
+      background: linear-gradient(135deg, #22c55e, #16a34a);
+    }
+
+    .notification-toggle input:checked + .toggle-slider:before {
+      transform: translateX(24px);
+    }
+
+    .notification-time-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 12px;
+    }
+
+    .notification-time-row label {
+      font-size: 14px;
+      color: #9ca3af;
+    }
+
+    .notification-time-row input[type="time"] {
+      padding: 8px 12px;
+      border-radius: 8px;
+      border: 1px solid #374151;
+      background: #0f172a;
+      color: #e5e7eb;
+      font-size: 14px;
+    }
+
+    .notification-status {
+      font-size: 12px;
+      color: #6b7280;
+      margin-top: 10px;
+    }
+
+    .notification-status.active {
+      color: #22c55e;
+    }
+
+    .notification-status.denied {
+      color: #ef4444;
+    }
+
     @media (max-width: 640px) {
       .container { padding: 20px; }
       h1 { font-size: 24px; }
@@ -663,7 +766,7 @@
 
     <div id="structureBox" class="structure-box">
       <h3 style="font-size: 18px; color: #facc15; margin-bottom: 16px; text-align: center;">Your Speaking Roadmap</h3>
-      
+
       <div class="formula-selector">
         <button class="formula-btn active" data-formula="one-thing">One Thing</button>
         <button class="formula-btn" data-formula="two-types">Two Types</button>
@@ -672,6 +775,24 @@
 
       <div class="structure-content" id="structureContent">
         Generate a word first to see your personalized speaking structure
+      </div>
+    </div>
+
+    <!-- Daily Reminder Notifications -->
+    <div class="notification-settings">
+      <div class="notification-header">
+        <h3>Daily Reminder</h3>
+        <label class="notification-toggle">
+          <input type="checkbox" id="notificationToggle">
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+      <div class="notification-time-row">
+        <label for="notificationTime">Remind me at:</label>
+        <input type="time" id="notificationTime" value="09:00">
+      </div>
+      <div class="notification-status" id="notificationStatus">
+        Enable notifications to get daily practice reminders
       </div>
     </div>
   </div>
@@ -1277,12 +1398,214 @@
       });
     });
 
+    // ===== NOTIFICATION SYSTEM =====
+    let notificationSettings = JSON.parse(localStorage.getItem('sgNotifications')) || {
+      enabled: false,
+      time: '09:00',
+      lastNotificationDate: null
+    };
+
+    const notificationToggle = document.getElementById('notificationToggle');
+    const notificationTime = document.getElementById('notificationTime');
+    const notificationStatus = document.getElementById('notificationStatus');
+    let notificationCheckInterval = null;
+    let swRegistration = null;
+
+    function saveNotificationSettings() {
+      localStorage.setItem('sgNotifications', JSON.stringify(notificationSettings));
+    }
+
+    function updateNotificationStatus() {
+      if (!('Notification' in window)) {
+        notificationStatus.textContent = 'Notifications not supported in this browser';
+        notificationStatus.className = 'notification-status denied';
+        notificationToggle.disabled = true;
+        return;
+      }
+
+      if (Notification.permission === 'denied') {
+        notificationStatus.textContent = 'Notifications blocked. Please enable in browser settings.';
+        notificationStatus.className = 'notification-status denied';
+        notificationToggle.checked = false;
+        notificationSettings.enabled = false;
+        saveNotificationSettings();
+        return;
+      }
+
+      if (notificationSettings.enabled && Notification.permission === 'granted') {
+        notificationStatus.textContent = `Daily reminder set for ${formatTime12h(notificationSettings.time)}`;
+        notificationStatus.className = 'notification-status active';
+      } else if (notificationSettings.enabled) {
+        notificationStatus.textContent = 'Click the toggle to enable notifications';
+        notificationStatus.className = 'notification-status';
+      } else {
+        notificationStatus.textContent = 'Enable notifications to get daily practice reminders';
+        notificationStatus.className = 'notification-status';
+      }
+    }
+
+    function formatTime12h(time24) {
+      const [hours, minutes] = time24.split(':').map(Number);
+      const ampm = hours >= 12 ? 'PM' : 'AM';
+      const hours12 = hours % 12 || 12;
+      return `${hours12}:${String(minutes).padStart(2, '0')} ${ampm}`;
+    }
+
+    async function requestNotificationPermission() {
+      if (!('Notification' in window)) return false;
+
+      if (Notification.permission === 'granted') return true;
+
+      if (Notification.permission !== 'denied') {
+        const permission = await Notification.requestPermission();
+        return permission === 'granted';
+      }
+
+      return false;
+    }
+
+    async function showNotification(title, body) {
+      if (Notification.permission !== 'granted') return;
+
+      // Use service worker for notification if available
+      if (swRegistration) {
+        swRegistration.showNotification(title, {
+          body: body,
+          icon: '/icon-192.png',
+          badge: '/icon-192.png',
+          tag: 'daily-reminder',
+          vibrate: [200, 100, 200],
+          requireInteraction: false
+        });
+      } else {
+        // Fallback to regular notification
+        new Notification(title, {
+          body: body,
+          icon: '/icon-192.png',
+          tag: 'daily-reminder'
+        });
+      }
+    }
+
+    function checkAndTriggerNotification() {
+      if (!notificationSettings.enabled) return;
+      if (Notification.permission !== 'granted') return;
+
+      const now = new Date();
+      const today = now.toDateString();
+      const [targetHours, targetMinutes] = notificationSettings.time.split(':').map(Number);
+      const currentHours = now.getHours();
+      const currentMinutes = now.getMinutes();
+
+      // Check if we already sent a notification today
+      if (notificationSettings.lastNotificationDate === today) return;
+
+      // Check if user already practiced today
+      if (stats.todaySpeeches > 0) return;
+
+      // Check if it's past the notification time
+      const isPastNotificationTime =
+        currentHours > targetHours ||
+        (currentHours === targetHours && currentMinutes >= targetMinutes);
+
+      if (isPastNotificationTime) {
+        // Send the notification
+        const messages = [
+          "Time to flex your speaking muscles!",
+          "Your voice is waiting to be heard. Let's practice!",
+          "A quick speech a day keeps stage fright away!",
+          "Ready to build your speaking confidence?",
+          "Your daily speaking workout awaits!"
+        ];
+        const randomMessage = messages[Math.floor(Math.random() * messages.length)];
+
+        showNotification("The Speaker's Gym", randomMessage);
+
+        // Mark notification as sent for today
+        notificationSettings.lastNotificationDate = today;
+        saveNotificationSettings();
+      }
+    }
+
+    function startNotificationChecker() {
+      // Check immediately
+      checkAndTriggerNotification();
+
+      // Check every minute
+      if (notificationCheckInterval) clearInterval(notificationCheckInterval);
+      notificationCheckInterval = setInterval(checkAndTriggerNotification, 60000);
+    }
+
+    async function handleNotificationToggle() {
+      if (notificationToggle.checked) {
+        const granted = await requestNotificationPermission();
+        if (granted) {
+          notificationSettings.enabled = true;
+          notificationSettings.time = notificationTime.value;
+          saveNotificationSettings();
+          startNotificationChecker();
+          showAchievement("Daily reminders enabled!");
+        } else {
+          notificationToggle.checked = false;
+          notificationSettings.enabled = false;
+          saveNotificationSettings();
+        }
+      } else {
+        notificationSettings.enabled = false;
+        saveNotificationSettings();
+        if (notificationCheckInterval) {
+          clearInterval(notificationCheckInterval);
+          notificationCheckInterval = null;
+        }
+      }
+      updateNotificationStatus();
+    }
+
+    function handleTimeChange() {
+      notificationSettings.time = notificationTime.value;
+      // Reset today's notification so it can trigger at new time if needed
+      const today = new Date().toDateString();
+      if (notificationSettings.lastNotificationDate === today) {
+        const [targetHours, targetMinutes] = notificationSettings.time.split(':').map(Number);
+        const now = new Date();
+        // Only reset if new time is in the future
+        if (now.getHours() < targetHours ||
+            (now.getHours() === targetHours && now.getMinutes() < targetMinutes)) {
+          notificationSettings.lastNotificationDate = null;
+        }
+      }
+      saveNotificationSettings();
+      updateNotificationStatus();
+    }
+
+    function initNotifications() {
+      // Restore saved settings
+      notificationToggle.checked = notificationSettings.enabled;
+      notificationTime.value = notificationSettings.time;
+
+      // Add event listeners
+      notificationToggle.addEventListener('change', handleNotificationToggle);
+      notificationTime.addEventListener('change', handleTimeChange);
+
+      // Update status display
+      updateNotificationStatus();
+
+      // Start checker if enabled
+      if (notificationSettings.enabled && Notification.permission === 'granted') {
+        startNotificationChecker();
+      }
+    }
+
     init();
+    initNotifications();
 
     // Register Service Worker for PWA
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('sw.js')
-        .then(reg => console.log('Service Worker registered'))
+        .then(reg => {
+          console.log('Service Worker registered');
+          swRegistration = reg;
+        })
         .catch(err => console.log('Service Worker registration failed:', err));
     }
   </script>
