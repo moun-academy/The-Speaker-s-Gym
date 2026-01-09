@@ -518,129 +518,46 @@
       transform: translateY(-2px) scale(1.02);
     }
 
-    /* AI Feedback */
-    .ai-panel {
-      background: rgba(30, 41, 59, 0.6);
-      border: 1px solid rgba(250, 204, 21, 0.2);
-      border-radius: 12px;
-      padding: 14px;
-      margin: 16px 0;
-    }
-
-    .ai-panel h3 { font-size: 16px; margin-bottom: 10px; color: #facc15; }
-
-    .ai-panel .helper { font-size: 12px; color: #9ca3af; margin-bottom: 8px; }
-
-    .ai-panel .field-row { display: flex; gap: 8px; margin-bottom: 10px; }
-    .ai-panel input { flex: 1; padding: 10px 12px; border-radius: 8px; border: 1px solid #374151; background: #0f172a; color: #e5e7eb; }
-    .ai-panel button { padding: 10px 12px; border-radius: 8px; border: none; background: linear-gradient(135deg, #22c55e, #16a34a); color: #0f172a; font-weight: 700; cursor: pointer; }
-
-    .ai-status { font-size: 13px; color: #9ca3af; margin-bottom: 8px; }
-    .ai-status.error { color: #f87171; }
-
-    .ai-feedback-box { background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(148, 163, 184, 0.3); border-radius: 10px; padding: 12px; color: #e2e8f0; font-size: 14px; white-space: pre-wrap; }
-
-    /* Notification Settings */
-    .notification-settings {
-      background: rgba(30, 41, 59, 0.6);
-      border: 1px solid rgba(250, 204, 21, 0.2);
-      border-radius: 12px;
-      padding: 16px;
-      margin-top: 20px;
-    }
-
-    .notification-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 12px;
-    }
-
-    .notification-header h3 {
-      font-size: 16px;
+    /* Structure Guide Button */
+    .structure-guide-btn {
+      width: 100%;
+      padding: 16px 24px;
+      border-radius: 14px;
+      border: 2px solid rgba(250, 204, 21, 0.4);
+      background: linear-gradient(135deg, rgba(250, 204, 21, 0.15), rgba(251, 191, 36, 0.08));
       color: #facc15;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .notification-toggle {
-      position: relative;
-      width: 50px;
-      height: 26px;
-    }
-
-    .notification-toggle input {
-      opacity: 0;
-      width: 0;
-      height: 0;
-    }
-
-    .toggle-slider {
-      position: absolute;
+      font-size: 16px;
+      font-weight: 700;
       cursor: pointer;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background-color: #374151;
-      transition: 0.3s;
-      border-radius: 26px;
-    }
-
-    .toggle-slider:before {
-      position: absolute;
-      content: "";
-      height: 20px;
-      width: 20px;
-      left: 3px;
-      bottom: 3px;
-      background-color: white;
-      transition: 0.3s;
-      border-radius: 50%;
-    }
-
-    .notification-toggle input:checked + .toggle-slider {
-      background: linear-gradient(135deg, #22c55e, #16a34a);
-    }
-
-    .notification-toggle input:checked + .toggle-slider:before {
-      transform: translateX(24px);
-    }
-
-    .notification-time-row {
+      transition: all 0.3s ease;
       display: flex;
       align-items: center;
-      gap: 12px;
-      margin-top: 12px;
+      justify-content: center;
+      gap: 10px;
+      box-shadow: 0 4px 15px rgba(250, 204, 21, 0.1);
     }
 
-    .notification-time-row label {
-      font-size: 14px;
-      color: #9ca3af;
+    .structure-guide-btn:hover {
+      background: linear-gradient(135deg, rgba(250, 204, 21, 0.25), rgba(251, 191, 36, 0.15));
+      border-color: rgba(250, 204, 21, 0.6);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(250, 204, 21, 0.2);
     }
 
-    .notification-time-row input[type="time"] {
-      padding: 8px 12px;
-      border-radius: 8px;
-      border: 1px solid #374151;
-      background: #0f172a;
-      color: #e5e7eb;
-      font-size: 14px;
+    .structure-guide-btn .icon {
+      font-size: 20px;
     }
 
-    .notification-status {
+    .structure-guide-btn .hint {
       font-size: 12px;
-      color: #6b7280;
-      margin-top: 10px;
+      font-weight: 400;
+      color: #9ca3af;
+      margin-left: 4px;
     }
 
-    .notification-status.active {
-      color: #22c55e;
-    }
-
-    .notification-status.denied {
-      color: #ef4444;
+    .structure-guide-btn.active {
+      background: linear-gradient(135deg, rgba(250, 204, 21, 0.3), rgba(251, 191, 36, 0.2));
+      border-color: #facc15;
     }
 
     @media (max-width: 640px) {
@@ -747,18 +664,13 @@
       <button id="resetBtn" class="secondary">Reset</button>
     </div>
 
-    <!-- AI Feedback -->
-    <div class="ai-panel">
-      <h3>🤖 AI Feedback</h3>
-      <div class="helper">We only send your transcript (never your audio) to the secure backend for AI coaching.</div>
-      <textarea id="manualTranscript" class="transcript-input" placeholder="Transcript will appear here automatically or you can paste your own."></textarea>
-      <div class="ai-status" id="aiStatus">Waiting for your next recording.</div>
-      <div class="ai-feedback-box" id="aiFeedback">Your feedback will appear here.</div>
-    </div>
-
     <!-- Structure Guide -->
-    <div style="text-align: center; margin-bottom: 12px;">
-      <button id="toggleStructureBtn" class="secondary" style="width: auto;">Show Structure Guide</button>
+    <div style="margin: 20px 0 16px;">
+      <button id="toggleStructureBtn" class="structure-guide-btn">
+        <span class="icon">&#128218;</span>
+        <span>Show Structure Guide</span>
+        <span class="hint">- Your speaking roadmap</span>
+      </button>
     </div>
 
     <div id="structureBox" class="structure-box">
@@ -775,23 +687,6 @@
       </div>
     </div>
 
-    <!-- Daily Reminder Notifications -->
-    <div class="notification-settings">
-      <div class="notification-header">
-        <h3>Daily Reminder</h3>
-        <label class="notification-toggle">
-          <input type="checkbox" id="notificationToggle">
-          <span class="toggle-slider"></span>
-        </label>
-      </div>
-      <div class="notification-time-row">
-        <label for="notificationTime">Remind me at:</label>
-        <input type="time" id="notificationTime" value="09:00">
-      </div>
-      <div class="notification-status" id="notificationStatus">
-        Enable notifications to get daily practice reminders
-      </div>
-    </div>
   </div>
 
   <!-- Rating Modal -->
@@ -958,10 +853,6 @@
     let mediaRecorder = null;
     let recordedChunks = [];
     let stream = null;
-    let isRequestingFeedback = false;
-    let recognition = null;
-    let recognitionActive = false;
-    let liveTranscript = '';
 
     // Elements
     const wordEl = document.getElementById('word');
@@ -973,9 +864,6 @@
     const nudgeBanner = document.getElementById('nudgeBanner');
     const achievement = document.getElementById('achievement');
     const ratingModal = document.getElementById('ratingModal');
-    const aiFeedback = document.getElementById('aiFeedback');
-    const aiStatus = document.getElementById('aiStatus');
-    const manualTranscript = document.getElementById('manualTranscript');
 
     // Initialize
     function init() {
@@ -983,9 +871,6 @@
       updateStats();
       updateWeekCalendar();
       updateNudge();
-      initSpeechRecognition();
-      setAiStatus('Waiting for your next recording.');
-      manualTranscript.value = '';
     }
 
     function checkNewDay() {
@@ -1057,7 +942,9 @@
       definitionEl.textContent = currentWord.definition;
       updateStructure();
       structureBox.style.display = 'none';
-      document.getElementById('toggleStructureBtn').textContent = 'Show Structure Guide';
+      const btn = document.getElementById('toggleStructureBtn');
+      btn.innerHTML = '<span class="icon">&#128218;</span><span>Show Structure Guide</span><span class="hint">- Your speaking roadmap</span>';
+      btn.classList.remove('active');
     }
 
     function startTimer() {
@@ -1088,7 +975,6 @@
     function reset() {
       clearInterval(timerInterval);
       if (mediaRecorder && mediaRecorder.state !== 'inactive') mediaRecorder.stop();
-      stopTranscriptionCapture();
       isRunning = false;
       elapsedSeconds = 0;
       updateTimerDisplay();
@@ -1106,96 +992,6 @@
       document.getElementById('stopAudioBtn').style.display = 'none';
       document.getElementById('startVideoBtn').style.display = 'block';
       document.getElementById('stopVideoBtn').style.display = 'none';
-    }
-
-    function setAiStatus(text, isError = false) {
-      aiStatus.textContent = text;
-      aiStatus.classList.toggle('error', isError);
-    }
-
-    function initSpeechRecognition() {
-      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-      if (!SpeechRecognition) {
-        setAiStatus('Live transcription unavailable on this browser. Paste your transcript to get feedback.', true);
-        return;
-      }
-
-      recognition = new SpeechRecognition();
-      recognition.continuous = true;
-      recognition.interimResults = true;
-      recognition.lang = 'en-US';
-
-      recognition.onresult = (event) => {
-        let transcript = '';
-        for (let i = 0; i < event.results.length; i++) {
-          transcript += event.results[i][0].transcript + ' ';
-        }
-        liveTranscript = transcript.trim();
-        manualTranscript.value = liveTranscript;
-      };
-
-      recognition.onerror = () => {
-        setAiStatus('Live transcription unavailable. Paste your transcript to get feedback.', true);
-      };
-
-      recognition.onend = () => {
-        recognitionActive = false;
-        if (liveTranscript) setAiStatus('Transcript captured. Generating feedback soon.');
-      };
-    }
-
-    function startTranscriptionCapture() {
-      if (!recognition || recognitionActive) return;
-      liveTranscript = '';
-      try {
-        recognition.start();
-        recognitionActive = true;
-        setAiStatus('Listening and transcribing...');
-      } catch (err) {
-        console.error('Could not start recognition:', err);
-      }
-    }
-
-    function stopTranscriptionCapture() {
-      if (recognition && recognitionActive) {
-        recognition.stop();
-      }
-    }
-
-    function getTranscriptForFeedback() {
-      const text = (manualTranscript.value || liveTranscript || '').trim();
-      if (!text) return '';
-      const header = currentWord ? `Word prompt: ${currentWord.word}\n` : '';
-      const duration = elapsedSeconds ? `Duration: ${formatTime(elapsedSeconds)}\n` : '';
-      return `${header}${duration}Transcript: ${text}`.trim();
-    }
-
-    async function requestFeedback(transcript) {
-      const trimmed = (transcript || '').trim();
-      if (!trimmed) { setAiStatus('Add a transcript to get AI feedback.', true); return; }
-      if (isRequestingFeedback) return;
-      isRequestingFeedback = true;
-      setAiStatus('Requesting AI feedback...');
-
-      try {
-        const feedbackRes = await fetch('/api/feedback', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ text: trimmed })
-        });
-
-        if (!feedbackRes.ok) throw new Error('Feedback generation failed');
-        const feedbackData = await feedbackRes.json();
-        const feedbackText = feedbackData.feedback?.trim() || 'No feedback generated.';
-
-        aiFeedback.textContent = feedbackText;
-        setAiStatus('Feedback ready!');
-      } catch (err) {
-        console.error(err);
-        setAiStatus('Unable to fetch feedback right now.', true);
-      } finally {
-        isRequestingFeedback = false;
-      }
     }
 
     function updateTimerDisplay() {
@@ -1278,19 +1074,14 @@
       mediaRecorder = new MediaRecorder(stream);
       mediaRecorder.ondataavailable = e => { if (e.data.size > 0) recordedChunks.push(e.data); };
       mediaRecorder.onstop = () => {
-        stopTranscriptionCapture();
-        const transcript = getTranscriptForFeedback();
         const blob = new Blob(recordedChunks, { type: 'audio/webm' });
         document.getElementById('audioDownloadLink').href = URL.createObjectURL(blob);
         document.getElementById('audioDownload').classList.add('show');
-        requestFeedback(transcript);
       };
       mediaRecorder.start();
       document.getElementById('audioVisualizer').classList.add('recording');
       document.getElementById('startAudioBtn').style.display = 'none';
       document.getElementById('stopAudioBtn').style.display = 'block';
-      startTranscriptionCapture();
-      setAiStatus('Recording... capturing transcript.');
       isRunning = true;
       wordBox.classList.add('active');
       timerInterval = setInterval(() => {
@@ -1302,7 +1093,6 @@
 
     function stopAudioRecording() {
       if (mediaRecorder && mediaRecorder.state !== 'inactive') mediaRecorder.stop();
-      stopTranscriptionCapture();
       clearInterval(timerInterval);
       isRunning = false;
       wordBox.classList.remove('active');
@@ -1318,19 +1108,14 @@
       mediaRecorder = new MediaRecorder(stream);
       mediaRecorder.ondataavailable = e => { if (e.data.size > 0) recordedChunks.push(e.data); };
       mediaRecorder.onstop = () => {
-        stopTranscriptionCapture();
-        const transcript = getTranscriptForFeedback();
         const blob = new Blob(recordedChunks, { type: 'video/webm' });
         document.getElementById('videoDownloadLink').href = URL.createObjectURL(blob);
         document.getElementById('videoDownload').classList.add('show');
-        requestFeedback(transcript);
       };
       mediaRecorder.start();
       document.getElementById('videoTimer').style.display = 'block';
       document.getElementById('startVideoBtn').style.display = 'none';
       document.getElementById('stopVideoBtn').style.display = 'block';
-      startTranscriptionCapture();
-      setAiStatus('Recording... capturing transcript.');
       isRunning = true;
       wordBox.classList.add('active');
       timerInterval = setInterval(() => {
@@ -1342,7 +1127,6 @@
 
     function stopVideoRecording() {
       if (mediaRecorder && mediaRecorder.state !== 'inactive') mediaRecorder.stop();
-      stopTranscriptionCapture();
       clearInterval(timerInterval);
       isRunning = false;
       wordBox.classList.remove('active');
@@ -1368,13 +1152,19 @@
     document.getElementById('stopVideoBtn').addEventListener('click', stopVideoRecording);
 
     document.getElementById('toggleStructureBtn').addEventListener('click', () => {
-      if (!currentWord) return;
+      const btn = document.getElementById('toggleStructureBtn');
+      if (!currentWord) {
+        showAchievement("Click 'New Word' first to get your speaking prompt!");
+        return;
+      }
       if (structureBox.style.display === 'none' || structureBox.style.display === '') {
         structureBox.style.display = 'block';
-        document.getElementById('toggleStructureBtn').textContent = 'Hide Structure Guide';
+        btn.innerHTML = '<span class="icon">&#128214;</span><span>Hide Structure Guide</span>';
+        btn.classList.add('active');
       } else {
         structureBox.style.display = 'none';
-        document.getElementById('toggleStructureBtn').textContent = 'Show Structure Guide';
+        btn.innerHTML = '<span class="icon">&#128218;</span><span>Show Structure Guide</span><span class="hint">- Your speaking roadmap</span>';
+        btn.classList.remove('active');
       }
     });
 
@@ -1395,279 +1185,13 @@
       });
     });
 
-    // ===== NOTIFICATION SYSTEM WITH INDEXEDDB =====
-    let notificationSettings = {
-      enabled: false,
-      time: '09:00',
-      lastNotificationDate: null
-    };
-
-    const notificationToggle = document.getElementById('notificationToggle');
-    const notificationTime = document.getElementById('notificationTime');
-    const notificationStatus = document.getElementById('notificationStatus');
-    let swRegistration = null;
-
-    // IndexedDB for sharing data with service worker
-    function openNotificationDB() {
-      return new Promise((resolve, reject) => {
-        const request = indexedDB.open('SpeakersGymDB', 1);
-        request.onerror = () => reject(request.error);
-        request.onsuccess = () => resolve(request.result);
-        request.onupgradeneeded = (event) => {
-          const db = event.target.result;
-          if (!db.objectStoreNames.contains('settings')) {
-            db.createObjectStore('settings', { keyPath: 'key' });
-          }
-          if (!db.objectStoreNames.contains('stats')) {
-            db.createObjectStore('stats', { keyPath: 'key' });
-          }
-        };
-      });
-    }
-
-    async function saveSettingsToDB(settings) {
-      try {
-        const db = await openNotificationDB();
-        return new Promise((resolve, reject) => {
-          const tx = db.transaction('settings', 'readwrite');
-          const store = tx.objectStore('settings');
-          const request = store.put({ key: 'notifications', value: settings });
-          request.onerror = () => reject(request.error);
-          request.onsuccess = () => resolve();
-        });
-      } catch (e) {
-        console.error('Error saving to IndexedDB:', e);
-      }
-    }
-
-    async function loadSettingsFromDB() {
-      try {
-        const db = await openNotificationDB();
-        return new Promise((resolve, reject) => {
-          const tx = db.transaction('settings', 'readonly');
-          const store = tx.objectStore('settings');
-          const request = store.get('notifications');
-          request.onerror = () => reject(request.error);
-          request.onsuccess = () => resolve(request.result?.value);
-        });
-      } catch (e) {
-        console.error('Error loading from IndexedDB:', e);
-        return null;
-      }
-    }
-
-    async function saveStatsToDB() {
-      try {
-        const db = await openNotificationDB();
-        return new Promise((resolve, reject) => {
-          const tx = db.transaction('stats', 'readwrite');
-          const store = tx.objectStore('stats');
-          const request = store.put({
-            key: 'daily',
-            value: {
-              todaySpeeches: stats.todaySpeeches,
-              lastDate: stats.lastDate
-            }
-          });
-          request.onerror = () => reject(request.error);
-          request.onsuccess = () => resolve();
-        });
-      } catch (e) {
-        console.error('Error saving stats to IndexedDB:', e);
-      }
-    }
-
-    async function saveNotificationSettings() {
-      localStorage.setItem('sgNotifications', JSON.stringify(notificationSettings));
-      await saveSettingsToDB(notificationSettings);
-    }
-
-    function updateNotificationStatus() {
-      if (!('Notification' in window)) {
-        notificationStatus.textContent = 'Notifications not supported in this browser';
-        notificationStatus.className = 'notification-status denied';
-        notificationToggle.disabled = true;
-        return;
-      }
-
-      if (Notification.permission === 'denied') {
-        notificationStatus.textContent = 'Notifications blocked. Enable in browser settings.';
-        notificationStatus.className = 'notification-status denied';
-        notificationToggle.checked = false;
-        notificationSettings.enabled = false;
-        saveNotificationSettings();
-        return;
-      }
-
-      if (notificationSettings.enabled && Notification.permission === 'granted') {
-        notificationStatus.textContent = `Reminder set for ${formatTime12h(notificationSettings.time)}`;
-        notificationStatus.className = 'notification-status active';
-      } else {
-        notificationStatus.textContent = 'Enable to get daily practice reminders';
-        notificationStatus.className = 'notification-status';
-      }
-    }
-
-    function formatTime12h(time24) {
-      const [hours, minutes] = time24.split(':').map(Number);
-      const ampm = hours >= 12 ? 'PM' : 'AM';
-      const hours12 = hours % 12 || 12;
-      return `${hours12}:${String(minutes).padStart(2, '0')} ${ampm}`;
-    }
-
-    async function requestNotificationPermission() {
-      if (!('Notification' in window)) return false;
-      if (Notification.permission === 'granted') return true;
-      if (Notification.permission !== 'denied') {
-        const permission = await Notification.requestPermission();
-        return permission === 'granted';
-      }
-      return false;
-    }
-
-    // Register for Periodic Background Sync (for scheduled notifications)
-    async function registerPeriodicSync() {
-      if (!swRegistration) return false;
-
-      try {
-        // Check if periodic sync is supported
-        if ('periodicSync' in swRegistration) {
-          const status = await navigator.permissions.query({ name: 'periodic-background-sync' });
-          if (status.state === 'granted') {
-            await swRegistration.periodicSync.register('daily-reminder-sync', {
-              minInterval: 60 * 60 * 1000 // Check every hour minimum
-            });
-            console.log('Periodic sync registered');
-            return true;
-          }
-        }
-      } catch (e) {
-        console.log('Periodic sync not available:', e);
-      }
-
-      // Fallback: use regular background sync
-      try {
-        if ('sync' in swRegistration) {
-          await swRegistration.sync.register('daily-reminder');
-          console.log('Background sync registered');
-          return true;
-        }
-      } catch (e) {
-        console.log('Background sync not available:', e);
-      }
-
-      return false;
-    }
-
-    // Ask service worker to check and show notification
-    function triggerNotificationCheck() {
-      if (swRegistration && swRegistration.active) {
-        swRegistration.active.postMessage({ type: 'CHECK_REMINDER' });
-      }
-    }
-
-    async function handleNotificationToggle() {
-      if (notificationToggle.checked) {
-        const granted = await requestNotificationPermission();
-        if (granted) {
-          notificationSettings.enabled = true;
-          notificationSettings.time = notificationTime.value;
-          await saveNotificationSettings();
-          await saveStatsToDB();
-          await registerPeriodicSync();
-          triggerNotificationCheck();
-          showAchievement("Daily reminders enabled!");
-        } else {
-          notificationToggle.checked = false;
-          notificationSettings.enabled = false;
-          await saveNotificationSettings();
-        }
-      } else {
-        notificationSettings.enabled = false;
-        await saveNotificationSettings();
-        // Unregister periodic sync
-        if (swRegistration && 'periodicSync' in swRegistration) {
-          try {
-            await swRegistration.periodicSync.unregister('daily-reminder-sync');
-          } catch (e) { /* ignore */ }
-        }
-      }
-      updateNotificationStatus();
-    }
-
-    async function handleTimeChange() {
-      notificationSettings.time = notificationTime.value;
-      const today = new Date().toDateString();
-      if (notificationSettings.lastNotificationDate === today) {
-        const [targetHours, targetMinutes] = notificationSettings.time.split(':').map(Number);
-        const now = new Date();
-        if (now.getHours() < targetHours ||
-            (now.getHours() === targetHours && now.getMinutes() < targetMinutes)) {
-          notificationSettings.lastNotificationDate = null;
-        }
-      }
-      await saveNotificationSettings();
-      updateNotificationStatus();
-    }
-
-    async function initNotifications() {
-      // Load from IndexedDB first, then localStorage as fallback
-      const dbSettings = await loadSettingsFromDB();
-      if (dbSettings) {
-        notificationSettings = dbSettings;
-      } else {
-        const lsSettings = localStorage.getItem('sgNotifications');
-        if (lsSettings) {
-          notificationSettings = JSON.parse(lsSettings);
-          await saveSettingsToDB(notificationSettings);
-        }
-      }
-
-      notificationToggle.checked = notificationSettings.enabled;
-      notificationTime.value = notificationSettings.time;
-
-      notificationToggle.addEventListener('change', handleNotificationToggle);
-      notificationTime.addEventListener('change', handleTimeChange);
-
-      updateNotificationStatus();
-
-      // Sync stats to IndexedDB so service worker can access
-      await saveStatsToDB();
-
-      // Register periodic sync if notifications enabled
-      if (notificationSettings.enabled && Notification.permission === 'granted') {
-        await registerPeriodicSync();
-        // Check immediately when app opens
-        setTimeout(triggerNotificationCheck, 2000);
-      }
-    }
-
-    // Update IndexedDB when stats change (hook into completeSpeech)
-    const originalCompleteSpeech = completeSpeech;
-    completeSpeech = function() {
-      originalCompleteSpeech();
-      saveStatsToDB();
-    };
-
     init();
 
     // Register Service Worker for PWA
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('sw.js')
-        .then(async (reg) => {
-          console.log('Service Worker registered');
-          swRegistration = reg;
-          // Wait for service worker to be ready
-          await navigator.serviceWorker.ready;
-          // Initialize notifications after SW is ready
-          await initNotifications();
-        })
-        .catch(err => {
-          console.log('Service Worker registration failed:', err);
-          initNotifications();
-        });
-    } else {
-      initNotifications();
+        .then(() => console.log('Service Worker registered'))
+        .catch(err => console.log('Service Worker registration failed:', err));
     }
   </script>
 </body>
