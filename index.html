@@ -518,6 +518,48 @@
       transform: translateY(-2px) scale(1.02);
     }
 
+    /* Structure Guide Button */
+    .structure-guide-btn {
+      width: 100%;
+      padding: 16px 24px;
+      border-radius: 14px;
+      border: 2px solid rgba(250, 204, 21, 0.4);
+      background: linear-gradient(135deg, rgba(250, 204, 21, 0.15), rgba(251, 191, 36, 0.08));
+      color: #facc15;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      box-shadow: 0 4px 15px rgba(250, 204, 21, 0.1);
+    }
+
+    .structure-guide-btn:hover {
+      background: linear-gradient(135deg, rgba(250, 204, 21, 0.25), rgba(251, 191, 36, 0.15));
+      border-color: rgba(250, 204, 21, 0.6);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(250, 204, 21, 0.2);
+    }
+
+    .structure-guide-btn .icon {
+      font-size: 20px;
+    }
+
+    .structure-guide-btn .hint {
+      font-size: 12px;
+      font-weight: 400;
+      color: #9ca3af;
+      margin-left: 4px;
+    }
+
+    .structure-guide-btn.active {
+      background: linear-gradient(135deg, rgba(250, 204, 21, 0.3), rgba(251, 191, 36, 0.2));
+      border-color: #facc15;
+    }
+
     @media (max-width: 640px) {
       .container { padding: 20px; }
       h1 { font-size: 24px; }
@@ -623,8 +665,12 @@
     </div>
 
     <!-- Structure Guide -->
-    <div style="text-align: center; margin-bottom: 12px;">
-      <button id="toggleStructureBtn" class="secondary" style="width: auto;">Show Structure Guide</button>
+    <div style="margin: 20px 0 16px;">
+      <button id="toggleStructureBtn" class="structure-guide-btn">
+        <span class="icon">&#128218;</span>
+        <span>Show Structure Guide</span>
+        <span class="hint">- Your speaking roadmap</span>
+      </button>
     </div>
 
     <div id="structureBox" class="structure-box">
@@ -896,7 +942,9 @@
       definitionEl.textContent = currentWord.definition;
       updateStructure();
       structureBox.style.display = 'none';
-      document.getElementById('toggleStructureBtn').textContent = 'Show Structure Guide';
+      const btn = document.getElementById('toggleStructureBtn');
+      btn.innerHTML = '<span class="icon">&#128218;</span><span>Show Structure Guide</span><span class="hint">- Your speaking roadmap</span>';
+      btn.classList.remove('active');
     }
 
     function startTimer() {
@@ -1104,13 +1152,19 @@
     document.getElementById('stopVideoBtn').addEventListener('click', stopVideoRecording);
 
     document.getElementById('toggleStructureBtn').addEventListener('click', () => {
-      if (!currentWord) return;
+      const btn = document.getElementById('toggleStructureBtn');
+      if (!currentWord) {
+        showAchievement("Click 'New Word' first to get your speaking prompt!");
+        return;
+      }
       if (structureBox.style.display === 'none' || structureBox.style.display === '') {
         structureBox.style.display = 'block';
-        document.getElementById('toggleStructureBtn').textContent = 'Hide Structure Guide';
+        btn.innerHTML = '<span class="icon">&#128214;</span><span>Hide Structure Guide</span>';
+        btn.classList.add('active');
       } else {
         structureBox.style.display = 'none';
-        document.getElementById('toggleStructureBtn').textContent = 'Show Structure Guide';
+        btn.innerHTML = '<span class="icon">&#128218;</span><span>Show Structure Guide</span><span class="hint">- Your speaking roadmap</span>';
+        btn.classList.remove('active');
       }
     });
 
