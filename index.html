@@ -560,22 +560,366 @@
       border-color: #facc15;
     }
 
+    /* Hamburger Menu Button */
+    .menu-toggle {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 1001;
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: rgba(250, 204, 21, 0.15);
+      border: 1px solid rgba(250, 204, 21, 0.3);
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      transition: all 0.3s;
+    }
+
+    .menu-toggle:hover { background: rgba(250, 204, 21, 0.25); }
+
+    .menu-toggle span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: #facc15;
+      border-radius: 2px;
+      transition: all 0.3s;
+    }
+
+    .menu-toggle.open span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+    .menu-toggle.open span:nth-child(2) { opacity: 0; }
+    .menu-toggle.open span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+
+    /* Sidebar Overlay */
+    .sidebar-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.6);
+      z-index: 999;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s;
+    }
+
+    .sidebar-overlay.open { opacity: 1; pointer-events: auto; }
+
+    /* Sidebar */
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: -280px;
+      width: 260px;
+      height: 100vh;
+      background: rgba(17, 24, 39, 0.98);
+      border-right: 1px solid rgba(250, 204, 21, 0.2);
+      z-index: 1000;
+      padding: 24px 16px;
+      transition: left 0.3s ease;
+      overflow-y: auto;
+    }
+
+    .sidebar.open { left: 0; }
+
+    .sidebar-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .sidebar-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: #facc15;
+    }
+
+    .sidebar-close {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: rgba(239, 68, 68, 0.2);
+      border: 1px solid rgba(239, 68, 68, 0.4);
+      color: #ef4444;
+      font-size: 16px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+    }
+
+    .sidebar-close:hover { background: rgba(239, 68, 68, 0.3); }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 16px;
+      border-radius: 12px;
+      border: 1px solid transparent;
+      cursor: pointer;
+      font-size: 15px;
+      font-weight: 600;
+      color: #d1d5db;
+      transition: all 0.2s;
+      margin-bottom: 6px;
+      background: transparent;
+      width: 100%;
+      text-align: left;
+    }
+
+    .nav-item:hover { background: rgba(255, 255, 255, 0.05); border-color: rgba(255, 255, 255, 0.1); }
+
+    .nav-item.active {
+      background: linear-gradient(135deg, rgba(250, 204, 21, 0.15), rgba(250, 204, 21, 0.08));
+      border-color: rgba(250, 204, 21, 0.3);
+      color: #facc15;
+    }
+
+    .nav-item .nav-icon { font-size: 18px; width: 24px; text-align: center; }
+
+    .nav-separator {
+      height: 1px;
+      background: rgba(255, 255, 255, 0.08);
+      margin: 12px 0;
+    }
+
+    /* Page sections */
+    .page-section { display: none; }
+    .page-section.active { display: block; }
+
+    /* Warm Up Page */
+    .warmup-header {
+      text-align: center;
+      margin-bottom: 24px;
+    }
+
+    .warmup-header h2 {
+      font-size: 24px;
+      background: linear-gradient(135deg, #facc15, #fbbf24);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-weight: 800;
+      margin-bottom: 6px;
+    }
+
+    .warmup-header p {
+      color: #9ca3af;
+      font-size: 14px;
+    }
+
+    .exercise-category {
+      margin-bottom: 20px;
+    }
+
+    .category-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: #facc15;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .exercise-card {
+      background: linear-gradient(135deg, #1e293b, #334155);
+      border-radius: 14px;
+      padding: 16px;
+      margin-bottom: 10px;
+      border: 1px solid #475569;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .exercise-card:hover {
+      border-color: rgba(250, 204, 21, 0.4);
+      transform: translateY(-1px);
+    }
+
+    .exercise-card.expanded { border-color: rgba(250, 204, 21, 0.5); }
+
+    .exercise-card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .exercise-name {
+      font-size: 15px;
+      font-weight: 600;
+      color: #e2e8f0;
+    }
+
+    .exercise-duration {
+      font-size: 12px;
+      color: #9ca3af;
+      background: rgba(255, 255, 255, 0.05);
+      padding: 4px 10px;
+      border-radius: 20px;
+    }
+
+    .exercise-details {
+      display: none;
+      margin-top: 14px;
+      padding-top: 14px;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .exercise-card.expanded .exercise-details { display: block; }
+
+    .exercise-instruction {
+      font-size: 14px;
+      color: #d1d5db;
+      line-height: 1.7;
+      margin-bottom: 10px;
+    }
+
+    .exercise-steps {
+      list-style: none;
+      padding: 0;
+    }
+
+    .exercise-steps li {
+      font-size: 13px;
+      color: #d1d5db;
+      padding: 6px 0;
+      padding-left: 20px;
+      position: relative;
+      line-height: 1.5;
+    }
+
+    .exercise-steps li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 12px;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #facc15;
+    }
+
+    .exercise-tip {
+      background: rgba(34, 197, 94, 0.1);
+      border: 1px solid rgba(34, 197, 94, 0.3);
+      border-radius: 8px;
+      padding: 10px 12px;
+      margin-top: 10px;
+      font-size: 13px;
+      color: #a7f3d0;
+    }
+
+    .warmup-timer-section {
+      text-align: center;
+      margin-top: 14px;
+    }
+
+    .warmup-timer-btn {
+      padding: 10px 24px;
+      border-radius: 50px;
+      font-size: 14px;
+      font-weight: 600;
+      background: linear-gradient(135deg, #22c55e, #16a34a);
+      color: white;
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .warmup-timer-btn:hover { transform: translateY(-2px); }
+
+    .warmup-timer-btn.running {
+      background: linear-gradient(135deg, #ef4444, #dc2626);
+    }
+
+    .warmup-timer-display {
+      font-size: 28px;
+      font-weight: bold;
+      color: #facc15;
+      margin-top: 8px;
+      display: none;
+    }
+
+    .warmup-timer-display.show { display: block; }
+
+    .back-to-home {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: #9ca3af;
+      font-size: 14px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 8px 0;
+      margin-bottom: 16px;
+      transition: color 0.2s;
+    }
+
+    .back-to-home:hover { color: #facc15; }
+
     @media (max-width: 640px) {
       .container { padding: 20px; }
       h1 { font-size: 24px; }
       .word { font-size: 28px; }
       .controls { grid-template-columns: 1fr; }
       .stats-bar { grid-template-columns: repeat(2, 1fr); }
+      .menu-toggle { top: 12px; right: 12px; }
     }
   </style>
 </head>
 
 <body>
+  <!-- Hamburger Menu Button -->
+  <button class="menu-toggle" id="menuToggle" aria-label="Open menu">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+
+  <!-- Sidebar Overlay -->
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+  <!-- Sidebar Menu -->
+  <div class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <span class="sidebar-title">Menu</span>
+      <button class="sidebar-close" id="sidebarClose" aria-label="Close menu">✕</button>
+    </div>
+    <button class="nav-item active" data-page="home">
+      <span class="nav-icon">🏠</span> Home
+    </button>
+    <button class="nav-item" data-page="think-fast">
+      <span class="nav-icon">⚡</span> Think Fast
+    </button>
+    <button class="nav-item" data-page="warm-up">
+      <span class="nav-icon">🎤</span> Warm Up
+    </button>
+    <div class="nav-separator"></div>
+    <button class="nav-item" data-page="settings">
+      <span class="nav-icon">⚙️</span> Settings
+    </button>
+  </div>
+
   <div class="container">
     <div class="header">
       <h1>🏋️ The Speaker's Gym</h1>
       <div class="brand">by <span class="brand-name">MOUN Academy</span></div>
     </div>
+
+    <!-- HOME PAGE -->
+    <div class="page-section active" id="page-home">
 
     <!-- Week Calendar -->
     <div class="week-calendar" id="weekCalendar"></div>
@@ -684,6 +1028,346 @@
 
       <div class="structure-content" id="structureContent">
         Generate a word first to see your personalized speaking structure
+      </div>
+    </div>
+
+    </div><!-- end page-home -->
+
+    <!-- WARM UP PAGE -->
+    <div class="page-section" id="page-warm-up">
+      <button class="back-to-home" id="backToHome">← Back to Home</button>
+
+      <div class="warmup-header">
+        <h2>🎤 Vocal Warm Up</h2>
+        <p>Prepare your voice before speaking. Tap any exercise to expand.</p>
+      </div>
+
+      <!-- Breathing Exercises -->
+      <div class="exercise-category">
+        <div class="category-title">🌬️ Breathing Exercises</div>
+
+        <div class="exercise-card" data-exercise>
+          <div class="exercise-card-header">
+            <span class="exercise-name">Diaphragmatic Breathing</span>
+            <span class="exercise-duration">2 min</span>
+          </div>
+          <div class="exercise-details">
+            <p class="exercise-instruction">Strengthen your breathing foundation for powerful projection.</p>
+            <ul class="exercise-steps">
+              <li>Place one hand on your chest, one on your belly</li>
+              <li>Inhale slowly through your nose for 4 counts — feel your belly expand</li>
+              <li>Hold for 2 counts</li>
+              <li>Exhale through your mouth for 6 counts — feel your belly contract</li>
+              <li>Repeat 8-10 times</li>
+            </ul>
+            <div class="exercise-tip">💡 Your chest should stay still — only your belly moves.</div>
+            <div class="warmup-timer-section">
+              <button class="warmup-timer-btn" data-seconds="120">▶ Start Timer (2:00)</button>
+              <div class="warmup-timer-display">0:00</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="exercise-card" data-exercise>
+          <div class="exercise-card-header">
+            <span class="exercise-name">Sustained "S" and "Z"</span>
+            <span class="exercise-duration">1 min</span>
+          </div>
+          <div class="exercise-details">
+            <p class="exercise-instruction">Build breath control and vocal cord engagement.</p>
+            <ul class="exercise-steps">
+              <li>Take a deep breath in</li>
+              <li>Exhale on a long "SSSSSSS" sound — go as long as possible</li>
+              <li>Rest, then repeat with a "ZZZZZZZ" sound</li>
+              <li>Notice how "Z" vibrates — that's your vocal cords engaging</li>
+              <li>Alternate 3 times each</li>
+            </ul>
+            <div class="exercise-tip">💡 Try to sustain each sound for 15-20 seconds. The "Z" trains vocal power.</div>
+            <div class="warmup-timer-section">
+              <button class="warmup-timer-btn" data-seconds="60">▶ Start Timer (1:00)</button>
+              <div class="warmup-timer-display">0:00</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="exercise-card" data-exercise>
+          <div class="exercise-card-header">
+            <span class="exercise-name">Straw Breathing (SOVT)</span>
+            <span class="exercise-duration">2 min</span>
+          </div>
+          <div class="exercise-details">
+            <p class="exercise-instruction">Semi-Occluded Vocal Tract exercise used by professional singers and speakers.</p>
+            <ul class="exercise-steps">
+              <li>Hold a straw (or purse your lips as if blowing through one)</li>
+              <li>Hum a comfortable note while blowing through the straw</li>
+              <li>Slide your pitch up and down like a siren</li>
+              <li>Do this for 30 seconds, rest, repeat 3 times</li>
+            </ul>
+            <div class="exercise-tip">💡 This gently warms up your vocal cords without strain. Great for mornings!</div>
+            <div class="warmup-timer-section">
+              <button class="warmup-timer-btn" data-seconds="120">▶ Start Timer (2:00)</button>
+              <div class="warmup-timer-display">0:00</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Lip & Tongue Exercises -->
+      <div class="exercise-category">
+        <div class="category-title">👅 Lip & Tongue Looseners</div>
+
+        <div class="exercise-card" data-exercise>
+          <div class="exercise-card-header">
+            <span class="exercise-name">Lip Trills (Motorboat)</span>
+            <span class="exercise-duration">1 min</span>
+          </div>
+          <div class="exercise-details">
+            <p class="exercise-instruction">Relax your lips and engage breath support simultaneously.</p>
+            <ul class="exercise-steps">
+              <li>Relax your lips and blow air through them to create a "brrrrr" vibration</li>
+              <li>Add voice — hum while doing the lip trill</li>
+              <li>Slide from low pitch to high pitch and back down</li>
+              <li>Repeat 5 times</li>
+            </ul>
+            <div class="exercise-tip">💡 If your lips stop vibrating, you're pushing too hard. Stay relaxed!</div>
+            <div class="warmup-timer-section">
+              <button class="warmup-timer-btn" data-seconds="60">▶ Start Timer (1:00)</button>
+              <div class="warmup-timer-display">0:00</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="exercise-card" data-exercise>
+          <div class="exercise-card-header">
+            <span class="exercise-name">Tongue Twisters</span>
+            <span class="exercise-duration">3 min</span>
+          </div>
+          <div class="exercise-details">
+            <p class="exercise-instruction">Sharpen your articulation and diction for crystal-clear speech.</p>
+            <ul class="exercise-steps">
+              <li>"Red leather, yellow leather" — repeat 5x, getting faster</li>
+              <li>"Unique New York, you know you need unique New York" — repeat 5x</li>
+              <li>"She sells seashells by the seashore" — repeat 5x</li>
+              <li>"Peter Piper picked a peck of pickled peppers" — repeat 5x</li>
+              <li>"Toy boat, toy boat, toy boat" — repeat 10x fast</li>
+            </ul>
+            <div class="exercise-tip">💡 Start slowly and prioritize clarity. Speed comes with practice!</div>
+            <div class="warmup-timer-section">
+              <button class="warmup-timer-btn" data-seconds="180">▶ Start Timer (3:00)</button>
+              <div class="warmup-timer-display">0:00</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="exercise-card" data-exercise>
+          <div class="exercise-card-header">
+            <span class="exercise-name">Jaw Release</span>
+            <span class="exercise-duration">1 min</span>
+          </div>
+          <div class="exercise-details">
+            <p class="exercise-instruction">Release tension in your jaw to open up your vocal resonance.</p>
+            <ul class="exercise-steps">
+              <li>Place your fists under your chin</li>
+              <li>Slowly open your mouth against the gentle resistance</li>
+              <li>Hold for 5 seconds, then relax</li>
+              <li>Now do exaggerated yawning motions 5 times</li>
+              <li>Massage your jaw joints in small circles</li>
+            </ul>
+            <div class="exercise-tip">💡 A relaxed jaw = a richer, more resonant voice.</div>
+            <div class="warmup-timer-section">
+              <button class="warmup-timer-btn" data-seconds="60">▶ Start Timer (1:00)</button>
+              <div class="warmup-timer-display">0:00</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Vocal Range Exercises -->
+      <div class="exercise-category">
+        <div class="category-title">🎵 Vocal Range & Resonance</div>
+
+        <div class="exercise-card" data-exercise>
+          <div class="exercise-card-header">
+            <span class="exercise-name">Humming Scales</span>
+            <span class="exercise-duration">2 min</span>
+          </div>
+          <div class="exercise-details">
+            <p class="exercise-instruction">Gently wake up your vocal range and find your resonance.</p>
+            <ul class="exercise-steps">
+              <li>Close your lips and hum a comfortable middle note</li>
+              <li>Feel the vibration in your lips, nose, and forehead</li>
+              <li>Slowly slide up 5 notes, then back down</li>
+              <li>Hum "Happy Birthday" or any familiar melody</li>
+              <li>Repeat, trying to extend your range slightly each time</li>
+            </ul>
+            <div class="exercise-tip">💡 Place your fingers on your nose — you should feel buzzing. That's good resonance!</div>
+            <div class="warmup-timer-section">
+              <button class="warmup-timer-btn" data-seconds="120">▶ Start Timer (2:00)</button>
+              <div class="warmup-timer-display">0:00</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="exercise-card" data-exercise>
+          <div class="exercise-card-header">
+            <span class="exercise-name">Siren Exercise</span>
+            <span class="exercise-duration">1 min</span>
+          </div>
+          <div class="exercise-details">
+            <p class="exercise-instruction">Smoothly connect your chest voice and head voice.</p>
+            <ul class="exercise-steps">
+              <li>Say "Oooo" starting at your lowest comfortable note</li>
+              <li>Smoothly slide all the way up to your highest note</li>
+              <li>Then slide all the way back down</li>
+              <li>Think of a fire truck siren going up and down</li>
+              <li>Repeat 5 times</li>
+            </ul>
+            <div class="exercise-tip">💡 Don't force the high or low notes. Your range will expand naturally over time.</div>
+            <div class="warmup-timer-section">
+              <button class="warmup-timer-btn" data-seconds="60">▶ Start Timer (1:00)</button>
+              <div class="warmup-timer-display">0:00</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="exercise-card" data-exercise>
+          <div class="exercise-card-header">
+            <span class="exercise-name">"Mah-May-Mee-Mo-Moo"</span>
+            <span class="exercise-duration">1 min</span>
+          </div>
+          <div class="exercise-details">
+            <p class="exercise-instruction">Train vowel clarity and forward placement of your voice.</p>
+            <ul class="exercise-steps">
+              <li>Say "Mah-May-Mee-Mo-Moo" on one pitch</li>
+              <li>Move up one note and repeat</li>
+              <li>Continue up 5 notes, then come back down</li>
+              <li>Exaggerate your mouth movements</li>
+              <li>Keep the sound forward — feel it in your mask (nose/cheeks area)</li>
+            </ul>
+            <div class="exercise-tip">💡 This is what professional actors do backstage before every show.</div>
+            <div class="warmup-timer-section">
+              <button class="warmup-timer-btn" data-seconds="60">▶ Start Timer (1:00)</button>
+              <div class="warmup-timer-display">0:00</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Projection & Power -->
+      <div class="exercise-category">
+        <div class="category-title">📢 Projection & Power</div>
+
+        <div class="exercise-card" data-exercise>
+          <div class="exercise-card-header">
+            <span class="exercise-name">"Ha-Ha-Ha" Breath Punches</span>
+            <span class="exercise-duration">1 min</span>
+          </div>
+          <div class="exercise-details">
+            <p class="exercise-instruction">Activate your diaphragm for powerful, projected speech.</p>
+            <ul class="exercise-steps">
+              <li>Stand up and place your hand on your belly</li>
+              <li>Say "HA!" sharply — feel your belly punch inward</li>
+              <li>Repeat: "HA! HA! HA! HA! HA!" — 5 quick bursts</li>
+              <li>Now do it louder, projecting to an imaginary back wall</li>
+              <li>3 sets of 5 bursts</li>
+            </ul>
+            <div class="exercise-tip">💡 This is the same muscle engagement you need for powerful speaking.</div>
+            <div class="warmup-timer-section">
+              <button class="warmup-timer-btn" data-seconds="60">▶ Start Timer (1:00)</button>
+              <div class="warmup-timer-display">0:00</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="exercise-card" data-exercise>
+          <div class="exercise-card-header">
+            <span class="exercise-name">Volume Ladder</span>
+            <span class="exercise-duration">2 min</span>
+          </div>
+          <div class="exercise-details">
+            <p class="exercise-instruction">Learn to control your volume from whisper to full projection.</p>
+            <ul class="exercise-steps">
+              <li>Pick any sentence: "I am ready to speak with confidence"</li>
+              <li>Level 1: Whisper it</li>
+              <li>Level 2: Soft conversational voice</li>
+              <li>Level 3: Normal speaking voice</li>
+              <li>Level 4: Presenting to a room of 50 people</li>
+              <li>Level 5: Commanding a stadium (without yelling)</li>
+              <li>Then come back down from 5 to 1</li>
+            </ul>
+            <div class="exercise-tip">💡 Good speakers have dynamic range. This exercise builds that control.</div>
+            <div class="warmup-timer-section">
+              <button class="warmup-timer-btn" data-seconds="120">▶ Start Timer (2:00)</button>
+              <div class="warmup-timer-display">0:00</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="exercise-card" data-exercise>
+          <div class="exercise-card-header">
+            <span class="exercise-name">Cork Exercise</span>
+            <span class="exercise-duration">2 min</span>
+          </div>
+          <div class="exercise-details">
+            <p class="exercise-instruction">Force your mouth muscles to overarticulate for maximum clarity.</p>
+            <ul class="exercise-steps">
+              <li>Place a cork or pen horizontally between your front teeth</li>
+              <li>Read any paragraph aloud, trying to be as clear as possible</li>
+              <li>Speak for 1 minute with the cork in</li>
+              <li>Remove it and read the same paragraph — notice how much clearer you sound!</li>
+            </ul>
+            <div class="exercise-tip">💡 This is the #1 trick used by news anchors before going on air.</div>
+            <div class="warmup-timer-section">
+              <button class="warmup-timer-btn" data-seconds="120">▶ Start Timer (2:00)</button>
+              <div class="warmup-timer-display">0:00</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Full Warm Up -->
+      <div class="exercise-category">
+        <div class="category-title">🚀 Quick Full Warm Up Routine</div>
+
+        <div class="exercise-card" data-exercise>
+          <div class="exercise-card-header">
+            <span class="exercise-name">5-Minute Complete Warm Up</span>
+            <span class="exercise-duration">5 min</span>
+          </div>
+          <div class="exercise-details">
+            <p class="exercise-instruction">The ultimate pre-speech routine. Do this before any presentation!</p>
+            <ul class="exercise-steps">
+              <li><strong>Minute 1:</strong> Diaphragmatic breathing — 6 deep belly breaths</li>
+              <li><strong>Minute 2:</strong> Lip trills sliding from low to high, 5 times</li>
+              <li><strong>Minute 3:</strong> Humming scales up and down your range</li>
+              <li><strong>Minute 4:</strong> Tongue twisters — "Red leather, yellow leather" x5, "Unique New York" x5</li>
+              <li><strong>Minute 5:</strong> Volume ladder — whisper to full projection and back</li>
+            </ul>
+            <div class="exercise-tip">💡 Do this routine 10 minutes before your next talk and feel the difference!</div>
+            <div class="warmup-timer-section">
+              <button class="warmup-timer-btn" data-seconds="300">▶ Start Timer (5:00)</button>
+              <div class="warmup-timer-display">0:00</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div><!-- end page-warm-up -->
+
+    <!-- THINK FAST PAGE (placeholder) -->
+    <div class="page-section" id="page-think-fast">
+      <button class="back-to-home" data-back>← Back to Home</button>
+      <div class="warmup-header">
+        <h2>⚡ Think Fast</h2>
+        <p>Quick-fire impromptu speaking challenges. Coming soon!</p>
+      </div>
+    </div>
+
+    <!-- SETTINGS PAGE (placeholder) -->
+    <div class="page-section" id="page-settings">
+      <button class="back-to-home" data-back>← Back to Home</button>
+      <div class="warmup-header">
+        <h2>⚙️ Settings</h2>
+        <p>Customize your experience. Coming soon!</p>
       </div>
     </div>
 
@@ -1186,6 +1870,110 @@
     });
 
     init();
+
+    // === SIDEBAR MENU & PAGE NAVIGATION ===
+    const sidebar = document.getElementById('sidebar');
+    const sidebarOverlay = document.getElementById('sidebarOverlay');
+    const menuToggle = document.getElementById('menuToggle');
+
+    function openMenu() {
+      sidebar.classList.add('open');
+      sidebarOverlay.classList.add('open');
+      menuToggle.classList.add('open');
+    }
+
+    function closeMenu() {
+      sidebar.classList.remove('open');
+      sidebarOverlay.classList.remove('open');
+      menuToggle.classList.remove('open');
+    }
+
+    menuToggle.addEventListener('click', () => {
+      sidebar.classList.contains('open') ? closeMenu() : openMenu();
+    });
+
+    document.getElementById('sidebarClose').addEventListener('click', closeMenu);
+    sidebarOverlay.addEventListener('click', closeMenu);
+
+    function navigateTo(page) {
+      // Hide all pages
+      document.querySelectorAll('.page-section').forEach(p => p.classList.remove('active'));
+      // Show target page
+      const target = document.getElementById('page-' + page);
+      if (target) target.classList.add('active');
+      // Update nav items
+      document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+      document.querySelector(`.nav-item[data-page="${page}"]`).classList.add('active');
+      // Stop any running warmup timers
+      stopAllWarmupTimers();
+      closeMenu();
+      window.scrollTo(0, 0);
+    }
+
+    document.querySelectorAll('.nav-item').forEach(item => {
+      item.addEventListener('click', () => navigateTo(item.dataset.page));
+    });
+
+    document.getElementById('backToHome').addEventListener('click', () => navigateTo('home'));
+    document.querySelectorAll('[data-back]').forEach(btn => {
+      btn.addEventListener('click', () => navigateTo('home'));
+    });
+
+    // === EXERCISE CARDS (expand/collapse) ===
+    document.querySelectorAll('.exercise-card[data-exercise]').forEach(card => {
+      card.querySelector('.exercise-card-header').addEventListener('click', () => {
+        card.classList.toggle('expanded');
+      });
+    });
+
+    // === WARMUP TIMERS ===
+    let warmupTimers = [];
+
+    function stopAllWarmupTimers() {
+      warmupTimers.forEach(t => clearInterval(t.interval));
+      warmupTimers = [];
+    }
+
+    document.querySelectorAll('.warmup-timer-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const display = btn.parentElement.querySelector('.warmup-timer-display');
+        const totalSeconds = parseInt(btn.dataset.seconds);
+
+        // Check if this timer is already running
+        const existing = warmupTimers.find(t => t.btn === btn);
+        if (existing) {
+          clearInterval(existing.interval);
+          warmupTimers = warmupTimers.filter(t => t.btn !== btn);
+          btn.textContent = '▶ Start Timer (' + formatTime(totalSeconds) + ')';
+          btn.classList.remove('running');
+          display.classList.remove('show');
+          return;
+        }
+
+        let remaining = totalSeconds;
+        display.textContent = formatTime(remaining);
+        display.classList.add('show');
+        btn.textContent = '⏹ Stop';
+        btn.classList.add('running');
+
+        const interval = setInterval(() => {
+          remaining--;
+          display.textContent = formatTime(remaining);
+          if (remaining <= 0) {
+            clearInterval(interval);
+            warmupTimers = warmupTimers.filter(t => t.btn !== btn);
+            btn.textContent = '▶ Start Timer (' + formatTime(totalSeconds) + ')';
+            btn.classList.remove('running');
+            display.textContent = 'Done!';
+            setTimeout(() => display.classList.remove('show'), 2000);
+            showAchievement('✅ Warm-up exercise complete!');
+          }
+        }, 1000);
+
+        warmupTimers.push({ btn, interval });
+      });
+    });
 
     // Register Service Worker for PWA
     if ('serviceWorker' in navigator) {
