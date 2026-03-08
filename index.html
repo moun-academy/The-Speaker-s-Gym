@@ -31,7 +31,7 @@
       border: 1px solid rgba(250, 204, 21, 0.2);
     }
 
-    .header { text-align: center; margin-bottom: 24px; }
+    /* .header is defined below with menu-toggle */
 
     h1 {
       font-size: 28px;
@@ -560,17 +560,24 @@
       border-color: #facc15;
     }
 
-    /* Hamburger Menu Button */
+    /* Header with menu button */
+    .header {
+      text-align: center;
+      margin-bottom: 24px;
+      position: relative;
+    }
+
+    /* Hamburger Menu Button - inside header */
     .menu-toggle {
-      position: fixed;
-      top: 20px;
-      left: 20px;
-      z-index: 1001;
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 10;
       width: 44px;
       height: 44px;
       border-radius: 12px;
-      background: rgba(250, 204, 21, 0.15);
-      border: 1px solid rgba(250, 204, 21, 0.3);
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
       cursor: pointer;
       display: flex;
       flex-direction: column;
@@ -578,16 +585,15 @@
       justify-content: center;
       gap: 5px;
       transition: all 0.3s;
-      backdrop-filter: blur(10px);
     }
 
-    .menu-toggle:hover { background: rgba(250, 204, 21, 0.25); }
+    .menu-toggle:hover { background: rgba(255, 255, 255, 0.1); border-color: rgba(250, 204, 21, 0.3); }
 
     .menu-toggle span {
       display: block;
-      width: 22px;
+      width: 20px;
       height: 2px;
-      background: #facc15;
+      background: #e5e7eb;
       border-radius: 2px;
       transition: all 0.3s;
     }
@@ -1088,13 +1094,125 @@
       border-color: #22c55e;
     }
 
+    /* Deep Breathing Animated Circle */
+    .breathing-widget {
+      background: linear-gradient(160deg, rgba(30, 41, 59, 0.8), rgba(15, 23, 42, 0.95));
+      border-radius: 18px;
+      padding: 24px;
+      margin-bottom: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      text-align: center;
+    }
+
+    .breathing-widget-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: #facc15;
+      margin-bottom: 20px;
+      text-align: left;
+    }
+
+    .breathing-circle-container {
+      position: relative;
+      width: 180px;
+      height: 180px;
+      margin: 0 auto 20px;
+    }
+
+    .breathing-circle-ring {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      border: 2px solid rgba(148, 163, 184, 0.15);
+    }
+
+    .breathing-circle {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 110px;
+      height: 110px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 40% 35%, rgba(148, 163, 184, 0.35), rgba(71, 85, 105, 0.4) 50%, rgba(30, 41, 59, 0.6));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: width 0.3s, height 0.3s;
+      box-shadow: 0 0 40px rgba(100, 116, 139, 0.15), inset 0 0 30px rgba(148, 163, 184, 0.1);
+    }
+
+    .breathing-circle.animating {
+      transition: none;
+    }
+
+    .breathing-circle-timer {
+      font-size: 26px;
+      font-weight: 700;
+      color: rgba(226, 232, 240, 0.9);
+      z-index: 1;
+    }
+
+    .breathing-phase {
+      font-size: 15px;
+      font-weight: 600;
+      color: #e2e8f0;
+      margin-bottom: 4px;
+      min-height: 22px;
+    }
+
+    .breathing-instructions {
+      font-size: 13px;
+      color: #6b7280;
+      margin-bottom: 4px;
+    }
+
+    .breathing-pattern {
+      font-size: 13px;
+      color: #94a3b8;
+      margin-bottom: 18px;
+    }
+
+    .breathing-start-btn {
+      padding: 12px 32px;
+      border-radius: 50px;
+      font-size: 15px;
+      font-weight: 700;
+      background: linear-gradient(135deg, #facc15, #f59e0b);
+      color: #0f172a;
+      border: none;
+      cursor: pointer;
+      transition: all 0.25s;
+      box-shadow: 0 4px 15px rgba(250, 204, 21, 0.3);
+      letter-spacing: 0.02em;
+    }
+
+    .breathing-start-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(250, 204, 21, 0.4);
+    }
+
+    .breathing-start-btn.active {
+      background: linear-gradient(135deg, #ef4444, #dc2626);
+      color: white;
+      box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3);
+    }
+
+    .breathing-cycle-count {
+      font-size: 12px;
+      color: #6b7280;
+      margin-top: 12px;
+    }
+
     @media (max-width: 640px) {
       .container { padding: 20px; }
       h1 { font-size: 24px; }
       .word { font-size: 28px; }
       .controls { grid-template-columns: 1fr; }
       .stats-bar { grid-template-columns: repeat(2, 1fr); }
-      .menu-toggle { top: 12px; left: 12px; }
       .warmup-stats { grid-template-columns: repeat(3, 1fr); gap: 8px; }
       .warmup-stat { padding: 10px 6px; }
       .exercise-name { font-size: 13px; }
@@ -1103,13 +1221,6 @@
 </head>
 
 <body>
-  <!-- Hamburger Menu Button -->
-  <button class="menu-toggle" id="menuToggle" aria-label="Open menu">
-    <span></span>
-    <span></span>
-    <span></span>
-  </button>
-
   <!-- Sidebar Overlay -->
   <div class="sidebar-overlay" id="sidebarOverlay"></div>
 
@@ -1136,6 +1247,11 @@
 
   <div class="container">
     <div class="header">
+      <button class="menu-toggle" id="menuToggle" aria-label="Open menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
       <h1>🏋️ The Speaker's Gym</h1>
       <div class="brand">by <span class="brand-name">MOUN Academy</span></div>
     </div>
@@ -1285,45 +1401,33 @@
         <p id="warmupQuote">"Your voice is your most powerful instrument. Warm it up."</p>
       </div>
 
-      <!-- Breathing Exercises -->
+      <!-- Deep Breathing Widget -->
+      <div class="breathing-widget">
+        <div class="breathing-widget-title">🫁 Deep Breathing</div>
+        <div class="breathing-circle-container">
+          <div class="breathing-circle-ring"></div>
+          <div class="breathing-circle" id="breathingCircle">
+            <span class="breathing-circle-timer" id="breathingTimer">0:00</span>
+          </div>
+        </div>
+        <div class="breathing-phase" id="breathingPhase"></div>
+        <div class="breathing-pattern">Inhale 4s → Hold 4s → Exhale 4s → Hold 4s</div>
+        <div class="breathing-instructions">Follow the expanding and contracting circle</div>
+        <div style="margin-top: 16px;">
+          <button class="breathing-start-btn" id="breathingStartBtn">▶ Start Breathing</button>
+        </div>
+        <div class="breathing-cycle-count" id="breathingCycleCount"></div>
+      </div>
+
+      <!-- Other Breathing Exercises -->
       <div class="exercise-category">
         <div class="category-header">
           <div class="category-icon breathing">🌬️</div>
           <div class="category-info">
-            <span class="category-title">Breathing Exercises</span>
+            <span class="category-title">More Breathing Exercises</span>
             <span class="category-subtitle">Build your foundation</span>
           </div>
-          <span class="category-count">3 exercises</span>
-        </div>
-
-        <div class="exercise-card" data-exercise>
-          <div class="exercise-card-header">
-            <div class="exercise-card-left">
-              <span class="exercise-number">1</span>
-              <span class="exercise-name">Diaphragmatic Breathing</span>
-            </div>
-            <div class="exercise-card-right">
-              <span class="exercise-duration">2 min</span>
-              <span class="exercise-chevron">▼</span>
-            </div>
-          </div>
-          <div class="exercise-details">
-            <div class="exercise-details-inner">
-              <p class="exercise-instruction">Strengthen your breathing foundation for powerful projection.</p>
-              <ul class="exercise-steps">
-                <li>Place one hand on your chest, one on your belly</li>
-                <li>Inhale slowly through your nose for 4 counts — feel your belly expand</li>
-                <li>Hold for 2 counts</li>
-                <li>Exhale through your mouth for 6 counts — feel your belly contract</li>
-                <li>Repeat 8-10 times</li>
-              </ul>
-              <div class="exercise-tip">Your chest should stay still — only your belly moves.</div>
-              <div class="warmup-timer-section">
-                <button class="warmup-timer-btn" data-seconds="120">▶ Start Timer (2:00)</button>
-                <div class="warmup-timer-display">0:00</div>
-              </div>
-            </div>
-          </div>
+          <span class="category-count">2 exercises</span>
         </div>
 
         <div class="exercise-card" data-exercise>
@@ -2389,6 +2493,107 @@
 
         warmupTimers.push({ btn, interval });
       });
+    });
+
+    // === ANIMATED BREATHING CIRCLE ===
+    const breathingCircle = document.getElementById('breathingCircle');
+    const breathingTimer = document.getElementById('breathingTimer');
+    const breathingPhase = document.getElementById('breathingPhase');
+    const breathingStartBtn = document.getElementById('breathingStartBtn');
+    const breathingCycleCount = document.getElementById('breathingCycleCount');
+
+    let breathingActive = false;
+    let breathingInterval = null;
+    let breathingAnimFrame = null;
+    let breathingElapsed = 0;
+    let breathingCycles = 0;
+
+    // 4-4-4-4 box breathing pattern (in seconds)
+    const breathPattern = [
+      { phase: 'Inhale...', duration: 4, minSize: 110, maxSize: 160 },
+      { phase: 'Hold', duration: 4, minSize: 160, maxSize: 160 },
+      { phase: 'Exhale...', duration: 4, minSize: 160, maxSize: 110 },
+      { phase: 'Hold', duration: 4, minSize: 110, maxSize: 110 }
+    ];
+    const totalCycleDuration = breathPattern.reduce((sum, p) => sum + p.duration, 0);
+
+    function animateBreathing() {
+      if (!breathingActive) return;
+
+      const cycleTime = breathingElapsed % totalCycleDuration;
+      let accumulated = 0;
+      let currentPhase = null;
+      let phaseProgress = 0;
+
+      for (const p of breathPattern) {
+        if (cycleTime < accumulated + p.duration) {
+          currentPhase = p;
+          phaseProgress = (cycleTime - accumulated) / p.duration;
+          break;
+        }
+        accumulated += p.duration;
+      }
+
+      if (currentPhase) {
+        breathingPhase.textContent = currentPhase.phase;
+        const size = currentPhase.minSize + (currentPhase.maxSize - currentPhase.minSize) * phaseProgress;
+        breathingCircle.style.width = size + 'px';
+        breathingCircle.style.height = size + 'px';
+
+        // Glow effect for inhale
+        if (currentPhase.phase === 'Inhale...') {
+          breathingCircle.style.boxShadow = `0 0 ${30 + phaseProgress * 30}px rgba(148, 163, 184, ${0.15 + phaseProgress * 0.2}), inset 0 0 30px rgba(148, 163, 184, 0.1)`;
+        } else if (currentPhase.phase === 'Exhale...') {
+          breathingCircle.style.boxShadow = `0 0 ${60 - phaseProgress * 30}px rgba(148, 163, 184, ${0.35 - phaseProgress * 0.2}), inset 0 0 30px rgba(148, 163, 184, 0.1)`;
+        }
+      }
+    }
+
+    function startBreathing() {
+      breathingActive = true;
+      breathingElapsed = 0;
+      breathingCycles = 0;
+      breathingCircle.classList.add('animating');
+      breathingStartBtn.textContent = '⏹ Stop';
+      breathingStartBtn.classList.add('active');
+      breathingCycleCount.textContent = '';
+
+      breathingInterval = setInterval(() => {
+        breathingElapsed += 0.05;
+        breathingTimer.textContent = formatTime(Math.floor(breathingElapsed));
+
+        const prevCycles = breathingCycles;
+        breathingCycles = Math.floor(breathingElapsed / totalCycleDuration);
+        if (breathingCycles > prevCycles && breathingCycles > 0) {
+          breathingCycleCount.textContent = `Cycle ${breathingCycles} completed`;
+        }
+
+        animateBreathing();
+      }, 50);
+    }
+
+    function stopBreathing() {
+      breathingActive = false;
+      clearInterval(breathingInterval);
+      breathingCircle.classList.remove('animating');
+      breathingCircle.style.width = '110px';
+      breathingCircle.style.height = '110px';
+      breathingCircle.style.boxShadow = '';
+      breathingPhase.textContent = '';
+      breathingStartBtn.textContent = '▶ Start Breathing';
+      breathingStartBtn.classList.remove('active');
+
+      if (breathingCycles > 0) {
+        breathingCycleCount.textContent = `${breathingCycles} cycle${breathingCycles > 1 ? 's' : ''} completed!`;
+        warmupCompletedCount++;
+        localStorage.setItem('warmupCompleted', warmupCompletedCount);
+        updateWarmupStats();
+        showAchievement('✅ Breathing exercise complete!');
+      }
+    }
+
+    breathingStartBtn.addEventListener('click', () => {
+      breathingActive ? stopBreathing() : startBreathing();
     });
 
     // Register Service Worker for PWA
